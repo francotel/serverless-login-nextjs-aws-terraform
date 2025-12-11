@@ -27,11 +27,9 @@ jobs:
           app:
             - 'app/**'
             - '!app/**/*.md'
-            - '!.github/workflows/**'
           iac:
             - 'iac/**'
             - '.github/workflows/**'
-        base: ${{ github.event.pull_request.base.sha || github.event.before }}
 
     - name: 📊 Mostrar resultados de detección
       run: |
