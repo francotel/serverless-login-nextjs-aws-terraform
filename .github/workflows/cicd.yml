@@ -17,6 +17,8 @@ jobs:
       iac: ${{ steps.changes.outputs.iac }}
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - uses: dorny/paths-filter@v3
       id: changes
