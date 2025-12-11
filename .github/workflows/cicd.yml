@@ -26,7 +26,6 @@ jobs:
         filters: |
           app:
             - 'app/**'
-            - '!app/**/*.md'
           iac:
             - 'iac/**'
             - '.github/workflows/**'
