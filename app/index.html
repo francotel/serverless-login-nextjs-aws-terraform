@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                <h1>DevOps<span>Dashboard</span></h1>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <span>Dev Team</span>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-code-branch"></i> Repositorios</a></li>
+                <li><a href="#"><i class="fas fa-server"></i> Infraestructura</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Métricas</a></li>
+                <li><a href="#"><i class="fas fa-cogs"></i> Configuración</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Ayuda</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #4f46e5;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Proyectos Activos</h3>
+                        <p class="stat-number">12</p>
+                        <span class="stat-change positive">+2 esta semana</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Builds Exitosos</h3>
+                        <p class="stat-number">94%</p>
+                        <span class="stat-change positive">+3% desde ayer</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Tiempo Respuesta</h3>
+                        <p class="stat-number">245ms</p>
+                        <span class="stat-change negative">-15ms mejorado</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Incidentes</h3>
+                        <p class="stat-number">3</p>
+                        <span class="stat-change neutral">0 hoy</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <h2><i class="fas fa-chart-bar"></i> Actividad de Deployments</h2>
+                    <div class="chart-placeholder" id="deployChart">
+                        <canvas id="deploymentsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2><i class="fas fa-server"></i> Uso de Recursos</h2>
+                    <div class="chart-placeholder" id="resourceChart">
+                        <canvas id="resourcesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="activities">
+                <h2><i class="fas fa-history"></i> Actividad Reciente</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Deployment exitoso: <strong>frontend-v2.1.0</strong></p>
+                            <span class="activity-time">Hace 15 minutos</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon warning">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Pipeline fallido: <strong>api-service</strong> en stage testing</p>
+                            <span class="activity-time">Hace 1 hora</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">
+                            <i class="fas fa-code-merge"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Merge request aprobado: <strong>feature/auth-redesign</strong></p>
+                            <span class="activity-time">Hace 3 horas</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Scan de seguridad completado: 0 vulnerabilidades críticas</p>
+                            <span class="activity-time">Hoy, 09:45 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Table -->
+            <div class="projects">
+                <h2><i class="fas fa-project-diagram"></i> Proyectos Recientes</h2>
+                <div class="projects-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Estado</th>
+                                <th>Último Deployment</th>
+                                <th>Health</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <i class="fab fa-react"></i>
+                                    <span>Frontend Web</span>
+                                </td>
+                                <td><span class="status-badge running">En ejecución</span></td>
+                                <td>Hace 2 horas</td>
+                                <td><div class="health-bar healthy"></div></td>
+                                <td>
+                                    <button class="btn-action"><i class="fas fa-play"></i></button>
+                                    <button class="btn-action"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn-action"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fab fa-node-js"></i>
+                                    <span>API Gateway</span>
+                                </td>
+                                <td><span class="status-badge running">En ejecución</span></td>
+                                <td>Ayer, 15:30</td>
+                                <td><div class="health-bar warning"></div></td>
+                                <td>
+                                    <button class="btn-action"><i class="fas fa-play"></i></button>
+                                    <button class="btn-action"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn-action"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-database"></i>
+                                    <span>Servicio DB</span>
+                                </td>
+                                <td><span class="status-badge stopped">Detenido</span></td>
+                                <td>Hace 3 días</td>
+                                <td><div class="health-bar critical"></div></td>
+                                <td>
+                                    <button class="btn-action"><i class="fas fa-play"></i></button>
+                                    <button class="btn-action"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn-action"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Mobile Backend</span>
+                                </td>
+                                <td><span class="status-badge running">En ejecución</span></td>
+                                <td>Hoy, 08:15</td>
+                                <td><div class="health-bar healthy"></div></td>
+                                <td>
+                                    <button class="btn-action"><i class="fas fa-play"></i></button>
+                                    <button class="btn-action"><i class="fas fa-chart-line"></i></button>
+                                    <button class="btn-action"><i class="fas fa-cog"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>DevOps Dashboard v1.0.0 • Sistema monitoreado con GitHub Actions y AWS</p>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-github"></i> Repositorio</a>
+                <a href="#"><i class="fas fa-book"></i> Documentación</a>
+                <a href="#"><i class="fas fa-envelope"></i> Soporte</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

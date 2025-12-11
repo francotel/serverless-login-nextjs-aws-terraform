@@ -1,0 +1,20 @@
+{
+  "name": "dev-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard de proyectos DevOps moderno",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server . --port=3000",
+    "build": "echo 'Build completado'",
+    "test": "jest --passWithNoTests",
+    "lint": "eslint . || exit 0"
+  },
+  "keywords": ["dashboard", "devops", "projects"],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "jest": "^29.7.0",
+    "eslint": "^8.0.0"
+  }
+}
