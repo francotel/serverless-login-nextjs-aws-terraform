@@ -34,39 +34,15 @@ jobs:
       run: |
         echo "=== 📋 RESUMEN DE CAMBIOS DETECTADOS ==="
         echo ""
-        echo "📁 Cambios en 'app/': ${{ steps.filter.outputs.app }}"
-        echo "☁️  Cambios en 'iac/': ${{ steps.filter.outputs.iac }}"
+        
+        # Capturar outputs en variables para mejor manejo
+        APP_CHANGES="${{ steps.filter.outputs.app }}"
+        IAC_CHANGES="${{ steps.filter.outputs.iac }}"
+        
+        echo "📁 Cambios en 'app/': ${APP_CHANGES}"
+        echo "☁️  Cambios en 'iac/': ${IAC_CHANGES}"
         echo ""
-        
-        if [[ "${{ steps.filter.outputs.app }}" == "true" ]]; then
-          echo "✅ SE DETECTARON CAMBIOS en la aplicación"
-          echo "   • Se ejecutará: Security Scan, App CI, Tests, Build"
-        else
-          echo "⏭️  NO hay cambios en la aplicación"
-          echo "   • Se saltará: App CI"
-        fi
-        
-        echo ""
-        
-        if [[ "${{ steps.filter.outputs.iac }}" == "true" ]]; then
-          echo "✅ SE DETECTARON CAMBIOS en IaC"
-          echo "   • Se ejecutará: Terraform Validate, Format, Plan"
-        else
-          echo "⏭️  NO hay cambios en IaC"
-          echo "   • Se saltará: IaC Validation"
-        fi
-        
-        echo ""
-        echo "=== 📝 CONTEXTO DEL EVENTO ==="
-        echo "🔀 Tipo de evento: ${{ github.event_name }}"
-        echo "📌 Ref: ${{ github.ref }}"
-        echo "🔄 SHA anterior: ${{ github.event.before }}"
-        echo "💾 SHA actual: ${{ github.sha }}"
-        
-        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          echo "📋 PR #: ${{ github.event.pull_request.number }}"
-          echo "📝 Título: ${{ github.event.pull_request.title }}"
-        fi
+
 
   # app-scan:
   #   needs: changes
