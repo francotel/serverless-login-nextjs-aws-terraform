@@ -27,6 +27,7 @@ jobs:
           app:
             - 'app/**'
             - '!app/**/*.md'
+            - '!.github/workflows/**'
           iac:
             - 'iac/**'
             - '.github/workflows/**'
