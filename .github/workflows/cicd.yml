@@ -1,0 +1,112 @@
+name: Deploy App and IAC to AWS
+
+on:
+  push:
+    branches:
+    - main
+
+env:
+  NODE_VERSION: 18
+  TF_VERSION: 1.6.2
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.changes.outputs.app }}
+      iac: ${{ steps.changes.outputs.iac }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        filters: |
+          app:
+            - 'app/**'
+            - '!app/**/*.md'
+          iac:
+            - 'iac/**'
+            - '.github/workflows/**'
+      base: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+  # app-scan:
+  #   needs: changes
+  #   if: ${{ needs.changes.outputs.app == 'true' }}
+  #   name: gitleaks
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+
+  #     - uses: gitleaks/gitleaks-action@v2
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         GITLEAKS_ENABLE_UPLOAD_ARTIFACT: false
+  #         GITLEAKS_ENABLE_COMMENTS: true
+
+  #     - name: Use Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '20.x'
+
+  #     - run: npm install --quiet
+  #       working-directory: ./app/weather-app
+
+  #     - run: npm run build --if-present
+  #       working-directory: ./app/weather-app
+
+  #     - run: npm test
+  #       working-directory: ./app/weather-app
+
+  #     - run: ls ./app/weather-app
+
+  #     - name: SonarCloud Scan
+  #       uses: sonarsource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       with:
+  #         projectBaseDir: './app/weather-app'
+  #       #   organization: ${{ secrets.SONAR_ORGANIZATION }} # Tu organización de SonarCloud
+  #       #   token: ${{ secrets.SONAR_TOKEN }} # Token de acceso de SonarCloud
+  #       #   projectKey: 'demo-sast' # Clave del proyecto en SonarCloud
+  #       #   projectName: 'demo-devsecops' # Nombre del proyecto en SonarCloud
+  #       #   projectBaseDir: './app/weather-app/build' # Directorio de la aplicación React (cambia si es necesario)
+  #       #   extraProperties: |
+  #       #     # Propiedades adicionales si las necesitas
+  #       #     sonar.sources=src
+  #       #     sonar.exclusions=**/*.spec.js,**/*.test.js
+
+
+  # iac:
+  #   needs: changes
+  #   if: ${{ needs.changes.outputs.iac == 'true' }}
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./iac
+  #   steps:
+  #   - uses: actions/checkout@v3
+
+  #   - name: Configure AWS Credentials
+  #     uses: aws-actions/configure-aws-credentials@v4
+  #     with:
+  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+  #   - uses: hashicorp/setup-terraform@v3
+  #     with:
+  #       terraform_version: env.TF_VERSION
+  #       terraform_wrapper: false
+
+  #   - name: Terraform Init
+  #     run: terraform init
+
+  #   - name: Terraform Plan
+  #     run: terraform plan -out=tfplan
+
+  #   - name: Terraform Apply
+  #     run: terraform apply tfplan
