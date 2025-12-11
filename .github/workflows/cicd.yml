@@ -36,8 +36,8 @@ jobs:
         echo ""
         
         # Capturar outputs en variables para mejor manejo
-        APP_CHANGES="${{ steps.filter.outputs.app }}"
-        IAC_CHANGES="${{ steps.filter.outputs.iac }}"
+        APP_CHANGES="${{ steps.changes.outputs.app }}"
+        IAC_CHANGES="${{ steps.changes.outputs.iac }}"
         
         echo "📁 Cambios en 'app/': ${APP_CHANGES}"
         echo "☁️  Cambios en 'iac/': ${IAC_CHANGES}"
